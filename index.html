@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <title>Covid-19 Confirmed Cases</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Custom styling -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1">COVID-19 CONFIRMED CASES </span>
+        <span class = "navbar-brand mb-0 h1 current-date">
+            <script> document.write(new Date().toLocaleDateString()); </script>
+        </span>
+    </nav>
+
+    <!-- Bootstrap grid setup -->
+    <div class="container">
+        <svg id="my_dataviz" width="1100" height="600"></svg>
+    </div>
+
+<!-- External JS libraries -->
+<script src="https://d3js.org/d3.v5.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<!-- Custom JS -->
+<script src="js/main.js"></script>
+
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
