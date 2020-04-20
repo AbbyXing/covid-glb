@@ -2,6 +2,11 @@ body {
 	background-color: black;
 }
 
+.navbar {
+    position: relative;
+    width: auto;
+}
+
 .country:hover {
 	fill-opacity: 0.8;
 	stroke: white;

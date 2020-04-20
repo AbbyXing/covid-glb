@@ -3,6 +3,8 @@ var svg = d3.select("svg"),
 	width = +svg.attr("width"),
 	height = +svg.attr("height");
 
+console.log(svg.attr("width"));
+
 // Tooltip
 var tooltip = d3.select('body')
 				.append('div')
@@ -11,8 +13,8 @@ var tooltip = d3.select('body')
 // Projection
 const projection = d3
 	.geoEckert4()
-	.scale(200)
-    .translate([0.5 * width, 0.50 * height]);
+	.scale(130)
+    .translate([0.5 * width, 0.5 * height]);
 
 // Path and Graticule
 const path = d3.geoPath().projection(projection);
