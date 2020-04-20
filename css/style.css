@@ -2,10 +2,6 @@ body {
 	background-color: black;
 }
 
-/*.hidden {
-	display: none;
-}*/
-
 .country:hover {
 	fill-opacity: 0.8;
 	stroke: white;

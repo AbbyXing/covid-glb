@@ -1,5 +1,5 @@
 # Description
-A world map shows total confirmed cases in each country.
+A world map shows total confirmed cases in each country. http://abbyxing.com/covid-glb/
 
 # Data
 - NovelCOVID/API  

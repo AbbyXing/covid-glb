@@ -10,7 +10,7 @@ var tooltip = d3.select('body')
 
 // Projection
 const projection = d3
-	.geoEqualEarth()
+	.geoEckert4()
 	.scale(200)
     .translate([0.5 * width, 0.50 * height]);
 
@@ -21,8 +21,8 @@ var graticule = d3.geoGraticule10();
 // Data Map and Color Scale
 var data = d3.map();
 var colorScale = d3.scaleThreshold()
-  .domain([0, 100, 400, 800, 5000, 10000, 30000])
-  .range(d3.schemeReds[8]);
+  .domain([0, 100, 400, 800, 5000, 10000, 30000, 50000])
+  .range(d3.schemeReds[9]);
 
 // Load External Data
 var promises = [
