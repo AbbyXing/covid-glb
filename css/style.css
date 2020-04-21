@@ -2,9 +2,18 @@ body {
 	background-color: black;
 }
 
+.flag {
+    height: 12px;
+    float: left;
+    position: relative;
+    margin-right: 8px;
+    margin-top: 4px;
+}
+
 .navbar {
     position: relative;
     width: auto;
+    height: 50px;
 }
 
 .country:hover {

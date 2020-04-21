@@ -3,12 +3,11 @@ var svg = d3.select("svg"),
 	width = +svg.attr("width"),
 	height = +svg.attr("height");
 
-console.log(svg.attr("width"));
-
 // Tooltip
 var tooltip = d3.select('body')
 				.append('div')
-    			.attr('class', 'hidden tooltip');
+    			.attr('class', 'hidden tooltip')
+    			.style("visibility", "hidden");
 
 // Projection
 const projection = d3
@@ -36,8 +35,8 @@ Promise.all(promises).then(function(allData){
 	var topo = allData[0];
 	var example = allData[1];
 	example.forEach(function(d){
-		data.set(d.countryInfo.iso3, +d.cases);
-		//console.log(d.countryInfo.iso3);
+		data.set(d.countryInfo.iso3, 
+			{"flag": d.countryInfo.flag, "cases": +d.cases, "deaths": +d.deaths});
 	});
 	ready(topo);
 });
@@ -69,15 +68,19 @@ function ready(topo) {
 	    .attr("d", path)
 	    // set the color of each country
       	.attr("fill", function (d) {
-	        d.total = data.get(d.id) || 0;
+      		//console.log(data.get(d.id));
+	        d.total = +data.get(d.id)?.cases || 0;
 	        return colorScale(d.total);
 	    })
-	    .on("mouseover", function(){
-	    	return tooltip.style("visibility", "visible");
+	    .on("mouseover", function(d){
+	    	if(data.has(d.id))
+	    		tooltip.style("visibility", "visible")
+	    			.html("<img class='flag' src='" + data.get(d.id)?.flag + "' alt=' '>"
+                		+ "<span>" + d.properties.name + "</span>"
+                		+ ":<br/>" + data.get(d.id)?.cases + " cases");
 	    })
 	    .on("mousemove", function(d) {
-            tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px")
-                	.html(d.properties.name + ":<br/>" + data.get(d.id) + " cases");
+            tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
         })
         .on("mouseout", function() {
             return tooltip.style("visibility", "hidden");
