@@ -14,7 +14,7 @@
 
 
     <nav class="navbar navbar-light bg-light">
-        <span class="navbar-brand h3">COVID-19 CONFIRMED CASES </span>
+        <span class="navbar-brand h3">COVID-19 <span class="title-word">CONFIRMED CASES</span> </span>
         <span class = "navbar-brand h3 current-date">
             <script> document.write(new Date().toLocaleDateString()); </script>
         </span>
@@ -24,6 +24,13 @@
     <div class="container">
         <div class="row">
             <svg id="my_dataviz" width="700" height="400"></svg>
+        </div>
+        <div class="row">
+            <div class="btn-group toggle-btn" role="group">
+              <button type="button" value="cases" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Cases</button>
+              <!-- <button type="button" class="btn btn-secondary">Today Cases</button> -->
+              <button type="button" value="deaths" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Deaths</button>
+            </div>
         </div>
     </div>
 
