@@ -12,7 +12,6 @@
 
 <body>
 
-
     <nav class="navbar navbar-light bg-light">
         <span class="navbar-brand h3">COVID-19 <span class="title-word">CONFIRMED CASES</span> </span>
         <span class = "navbar-brand h3 current-date">
@@ -22,16 +21,44 @@
 
     <!-- Bootstrap grid setup -->
     <div class="container">
+        <!-- World Map -->
         <div class="row">
-            <svg id="my_dataviz" width="700" height="400"></svg>
-        </div>
-        <div class="row">
-            <div class="btn-group toggle-btn" role="group">
-              <button type="button" value="cases" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Cases</button>
-              <!-- <button type="button" class="btn btn-secondary">Today Cases</button> -->
-              <button type="button" value="deaths" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Deaths</button>
+            <div class="col-sm-9">
+                <svg id="my_dataviz" width="700" height="400"></svg>
+                <!-- Data Toggle Buttons -->
+                <div class="row">
+                    <div class="btn-group toggle-btn" role="group">
+                      <button type="button" value="cases" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Total Cases</button>
+                      <button type="button" value="todayCases" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Today Cases</button>
+                      <button type="button" value="deaths" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Deaths</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Infor List -->
+            <div class="col-sm-3">
+                <div class="list-group info-list">
+                  <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html?topic=ex-col-faq#a" class="list-group-item list-group-item-action">- What is Covid-19?</a>
+                  <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks.html#h" class="list-group-item list-group-item-action">- How coronavirus spreads?</a>
+                  <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html#s" class="list-group-item list-group-item-action">- Symptoms of COVID-19</a>
+                  <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks.html#p" class="list-group-item list-group-item-action">- How to prevent?</a>
+                </div>
+
             </div>
         </div>
+        
+        <!-- DropDown Menu -->
+        <!-- <div class="row">
+            <div class="dropdown">
+              <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Choose a Country
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                <button class="dropdown-item" type="button">Action</button>
+                <button class="dropdown-item" type="button">Another action</button>
+                <button class="dropdown-item" type="button">Something else here</button>
+              </div>
+            </div>
+        </div> -->
     </div>
 
 <!-- External JS libraries -->

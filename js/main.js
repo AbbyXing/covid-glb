@@ -19,21 +19,27 @@ const projection = d3
 const path = d3.geoPath().projection(projection);
 var graticule = d3.geoGraticule10();
 
-// Data Map and Color Scale
-var data = d3.map();
+// Color Scale
 var colorScaleCases = d3.scaleThreshold()
   .domain([0, 100, 400, 800, 5000, 10000, 30000, 50000])
   .range(d3.schemeReds[9]);
 var colorScaleDeath = d3.scaleThreshold()
   .domain([0, 50, 100, 200, 500, 1000, 5000, 10000])
   .range(d3.schemeBlues[9]);
+var colorScaleTodayCases = d3.scaleThreshold()
+	.domain([0, 5, 10, 50, 100, 200, 500, 1000])
+	.range(d3.schemeGreens[9]);
+var colorScales = d3.map()
+	.set("cases", colorScaleCases)
+	.set("deaths", colorScaleDeath)
+	.set("todayCases", colorScaleTodayCases);
 
 // Load External Data
-var proxyUrl = "https://cors-anywhere.herokuapp.com/",
-	targetUrl = "https://corona.lmao.ninja/v2/countries";
+var dataForMap = d3.map();
 var promises = [
 	d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson"),
-	d3.json(targetUrl)
+	d3.json("https://corona.lmao.ninja/v2/countries"),
+	d3.json("https://corona.lmao.ninja/v2/historical?lastdays=30")
 ];
 
 // countries map
@@ -43,8 +49,8 @@ Promise.all(promises).then(function(allData){
 	var topo = allData[0];
 	var example = allData[1];
 	example.forEach(function(d){
-		data.set(d.countryInfo.iso3, 
-			{"flag": d.countryInfo.flag, "cases": +d.cases, "deaths": +d.deaths});
+		dataForMap.set(d.countryInfo.iso3, 
+			{"flag": d.countryInfo.flag, "cases": +d.cases, "deaths": +d.deaths, "todayCases": +d.todayCases});
 	});
 
 	countries = ready(topo, countries);
@@ -54,26 +60,14 @@ Promise.all(promises).then(function(allData){
 var value = "cases";
 function dataToggle(v){
 	value = v;
-	if(v === "deaths"){
-		countries
+	countries
 		.attr("fill", function (d) {
       		d.total = 0;
-      		if(data.has(d.id))
-	        	d.total = +data.get(d.id)[value];
-	        return colorScaleDeath(d.total);
+      		if(dataForMap.has(d.id))
+	        	d.total = +dataForMap.get(d.id)[value];
+	        return colorScales.get(value)(d.total);
 	    });
-	    d3.select(".title-word").text("DEATHS");
-	} else {
-		countries
-		.attr("fill", function (d) {
-      		d.total = 0;
-      		if(data.has(d.id))
-	        	d.total = +data.get(d.id)[value];
-	        return colorScaleCases(d.total);
-	    });
-	    d3.select(".title-word").text("CONFIRMED CASES");
-	}
-	
+	    d3.select(".title-word").text(value.toUpperCase());
 }
 
 function ready(topo, countries) {
@@ -104,16 +98,16 @@ function ready(topo, countries) {
 	    // set the color of each country
       	.attr("fill", function (d) {
       		d.total = 0;
-      		if(data.has(d.id))
-	        	d.total = +data.get(d.id)[value];
+      		if(dataForMap.has(d.id))
+	        	d.total = +dataForMap.get(d.id)[value];
 	        return colorScaleCases(d.total);
 	    })
 	    .on("mouseover", function(d){
-	    	if(data.has(d.id))
+	    	if(dataForMap.has(d.id))
 	    		tooltip.style("visibility", "visible")
-	    			.html("<img class='flag' src='" + data.get(d.id)?.flag + "' alt=' '>"
+	    			.html("<img class='flag' src='" + dataForMap.get(d.id)?.flag + "' alt=' '>"
                 		+ "<span>" + d.properties.name + "</span>"
-                		+ ":<br/>" + data.get(d.id)[value] + " cases");
+                		+ ":<br/>" + dataForMap.get(d.id)[value] + " cases");
 	    })
 	    .on("mousemove", function(d) {
             tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");

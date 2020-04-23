@@ -16,8 +16,21 @@ body {
     height: 50px;
 }
 
+.info-list {
+    margin: 150px auto;
+}
+.info-list a {
+    width: 100%;
+    font-size: 0.9em;
+    background: transparent;
+    border-color: grey;
+}
+
 .toggle-btn {
     margin: 0 auto;
+}
+.toggle-btn button {
+    font-size: 0.9em;
 }
 
 .country:hover {
@@ -26,7 +39,7 @@ body {
 }
 
 #my_dataviz {
-	margin: 20px auto;
+	margin: 50px 55px;
 }
 
 div.tooltip {
