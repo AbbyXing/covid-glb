@@ -24,7 +24,11 @@
         <!-- World Map -->
         <div class="row">
             <div class="col-sm-9">
-                <svg id="my_dataviz" width="700" height="400"></svg>
+              <div class="row">
+                <div id="my_dataviz" class="row">
+                  <p>- World Map Shows The Number Of Cases:</p>
+                </div>
+              </div>
                 <!-- Data Toggle Buttons -->
                 <div class="row">
                     <div class="btn-group toggle-btn" role="group">
@@ -42,32 +46,27 @@
                   <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html#s" class="list-group-item list-group-item-action">- Symptoms of COVID-19</a>
                   <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks.html#p" class="list-group-item list-group-item-action">- How to prevent?</a>
                 </div>
-
             </div>
         </div>
-        
-        <!-- DropDown Menu -->
-        <!-- <div class="row">
-            <div class="dropdown">
-              <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Choose a Country
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                <button class="dropdown-item" type="button">Action</button>
-                <button class="dropdown-item" type="button">Another action</button>
-                <button class="dropdown-item" type="button">Something else here</button>
-              </div>
-            </div>
-        </div> -->
+
+        <!-- Spot Chart -->
+        <div class="row">
+          <div id="bar-chart" class="col-sm-12">
+            <p>- Bar Chart Shows The Number Of Cases in Each Country:</p>
+          </div>
+        </div>
     </div>
 
 <!-- External JS libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://d3js.org/d3.v5.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 <!-- Custom JS -->
-<script src="js/main.js"></script>
-
+<script src="js/world-map.js"></script>
+<script src="js/bar-chart.js"></script>
 
 
 

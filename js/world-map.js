@@ -1,7 +1,9 @@
-// The svg
-var svg = d3.select("svg"),
-	width = +svg.attr("width"),
-	height = +svg.attr("height");
+var width = 700,
+	height = 400;
+var svg = d3.select("#my_dataviz")
+	.append("svg")
+	.attr("width", width)
+	.attr("height", height);
 
 // Tooltip
 var tooltip = d3.select('body')

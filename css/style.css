@@ -1,5 +1,11 @@
-body {
+html, body {
 	background-color: black;
+}
+
+p {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 50px;
 }
 
 .flag {
@@ -17,7 +23,7 @@ body {
 }
 
 .info-list {
-    margin: 150px auto;
+    margin: 200px auto;
 }
 .info-list a {
     width: 100%;
@@ -40,6 +46,10 @@ body {
 
 #my_dataviz {
 	margin: 50px 55px;
+}
+
+#bar-chart {
+    margin: 200px auto;
 }
 
 div.tooltip {
