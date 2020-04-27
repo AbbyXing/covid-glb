@@ -39,6 +39,12 @@ p {
     font-size: 0.9em;
 }
 
+.input-group{
+    margin-left: 50px;
+    margin-bottom: 50px;
+    width: 50%;
+}
+
 .country:hover {
 	fill-opacity: 0.8;
 	stroke: white;
@@ -49,7 +55,8 @@ p {
 }
 
 #bar-chart {
-    margin: 200px auto;
+    margin: 150px auto;
+    margin-bottom: 0;
 }
 
 div.tooltip {

@@ -26,7 +26,7 @@
             <div class="col-sm-9">
               <div class="row">
                 <div id="my_dataviz" class="row">
-                  <p>- World Map Shows The Number Of Cases:</p>
+                  <p>- World Map:</p>
                 </div>
               </div>
                 <!-- Data Toggle Buttons -->
@@ -43,16 +43,26 @@
                 <div class="list-group info-list">
                   <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html?topic=ex-col-faq#a" class="list-group-item list-group-item-action">- What is Covid-19?</a>
                   <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks.html#h" class="list-group-item list-group-item-action">- How coronavirus spreads?</a>
-                  <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html#s" class="list-group-item list-group-item-action">- Symptoms of COVID-19</a>
+                  <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html#s" class="list-group-item list-group-item-action">- Symptoms of Covid-19</a>
                   <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks.html#p" class="list-group-item list-group-item-action">- How to prevent?</a>
                 </div>
             </div>
         </div>
+ 
 
         <!-- Spot Chart -->
         <div class="row">
           <div id="bar-chart" class="col-sm-12">
-            <p>- Bar Chart Shows The Number Of Cases in Each Country:</p>
+            <p>- Countries:</p>
+            <!-- Country Select Input -->
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <label class="input-group-text" for="country-select">Country: </label>
+              </div>
+              <select class="custom-select" id="country-select">
+                <option selected>Select a country/province</option>
+              </select>
+            </div>
           </div>
         </div>
     </div>

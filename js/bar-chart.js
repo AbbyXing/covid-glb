@@ -1,7 +1,20 @@
+// selection button
+var selectionBtn = $( "#country-select" );
+
+// selected country
+var selectedCountry;
+
+// margin
 var margin = { left:80, right:10, top:10, bottom:150 };
 
+// width and height
 var width = 1100 - margin.left - margin.right,
-	height = 400 - margin.top - margin.bottom;
+	height = 500 - margin.top - margin.bottom;
+
+// transition
+var t = d3.transition().duration(1000);
+
+// svg
 var svg2 = d3.select("#bar-chart")
 	.append("svg")
 	.attr("width", width + margin.left + margin.right)
@@ -24,23 +37,30 @@ g.append("text")
 
 d3.json("https://corona.lmao.ninja/v2/historical?lastdays=400").then(function(data){
 
-	var date = "4/23/20";
+	// initiate country selection values:
+	data.forEach(function(d, i){
+		if(d.province == null){
+			selectionBtn.append(`<option value="${d.country}">${d.country}</option>`); 
+		} else{
+			selectionBtn.append(`<option value="${d.country + "-" + d.province}">${d.country + "-" + d.province}</option>`); 
+		}
+	});
+
+	var timeline = Object.keys(data[0].timeline.cases);
 
 	var x = d3.scaleBand()
-		.domain(data.map(function(d){ return d.country; }))
+		.domain(timeline)
 		.range([0, width])
 		.paddingInner(0.2)
 		.paddingOuter(0.2);
 
 	var y = d3.scaleLinear()
-		.domain([0, d3.max(data, function(d){
-			return parseInt(+d.timeline.cases[date]);;
-		})])
+		.domain([0, 10000])
 		.range([height, 0]);
 
 	var xAxisCall = d3.axisBottom(x);
 	g.append("g")
-		.attr("class", "x axis")
+		.attr("class", "x-axis")
 		.attr("transform", "translate(0, " + height + ")")
 		.call(xAxisCall)
 		.selectAll("text")
@@ -57,40 +77,99 @@ d3.json("https://corona.lmao.ninja/v2/historical?lastdays=400").then(function(da
 			return d;
 		});
 	g.append("g")
-		.attr("class", "y axis")
+		.attr("class", "y-axis")
 		.call(yAxisCall)
 		.selectAll("text")
 		.attr("fill", "white");
 
-	update(data, x, y, date);
+	// update(data, x, y, xAxisCall, yAxisCall, selectedCountry);
+
+	$(document).ready(function(){
+	    $(selectionBtn).change(function(){
+	        selectedCountry = $(this).children("option:selected").val();
+	        update(data, x, y,xAxisCall, yAxisCall, selectedCountry);
+	    });
+	});
 });
 
 
-function update(data, x, y, date){
+function update(data, x, y, xAxisCall, yAxisCall, selectedCountry){
 
-	// Standard transition time for the visualization
-    var t = d3.transition()
-        .duration(100);
+	// ENTER new elements present in new data.
+    if(selectedCountry != null && selectedCountry != "Select a country"){
+    	var country = selectedCountry.split("-");
+    	var filteredData;
+    	if(country.length == 2){
+    		filteredData = data.filter(obj => {
+			  return obj.country === country[0] && obj.province === country[1];
+			});
+    	} else{
+    		filteredData = data.filter(obj => {
+			  return obj.country === country[0];
+			});
+    	}
 
-    // JOIN new data with old elements.
-    var rects = g.selectAll("rect")
-		.data(data);
+    	filteredData = filteredData[0].timeline.cases;
 
-    // // EXIT old elements not present in new data.
-    // circles.exit()
-    //     .attr("class", "exit")
-    //     .remove();
+    	var dataForChart = [];
+    	for(date in filteredData){
+    		dataForChart.push({"date": date, "case": +filteredData[date]});
+    	}
 
-    // ENTER new elements present in new data.
-	rects.enter()
-		.append("rect")
-			.attr("y", function(d){ return parseInt(y(+d.timeline.cases[date])); })
-			.attr("x", function(d){ return x(d.country); })
-			.attr("width", x.bandwidth)
-			.attr("height", function(d){ 
-				return height - parseInt(y(+d.timeline.cases[date])); })
-			.attr("fill", "grey");
+    	y.domain([0, d3.max(Object.values(filteredData))]);
 
+		x.domain(Object.keys(filteredData));
+
+		// JOIN new data with old elements.
+	    var rects = g.selectAll("rect")
+        .data(dataForChart);
+
+		// // EXIT old elements not present in new data.
+	    rects.exit()
+	        .attr("fill", "red")
+	    .transition(t)
+	        .attr("y", y(0))
+	        .attr("height", 0)
+	        .remove();
+	    d3.select(".x-axis").remove();
+	    d3.select(".y-axis").remove();
+
+		xAxisCall = d3.axisBottom(x);
+		g.append("g")
+			.attr("class", "x-axis")
+			.attr("transform", "translate(0, " + height + ")")
+			.call(xAxisCall)
+			.selectAll("text")
+				.attr("y", 3)
+				.attr("x", 8)
+				.attr("font-size", "6px")
+				.attr("transform", "rotate(60)")
+				.attr("fill", "white")
+	    		.style("text-anchor", "start");
+
+		yAxisCall = d3.axisLeft(y)
+		g.append("g")
+			.attr("class", "y-axis")
+			.call(yAxisCall)
+			.selectAll("text")
+			.attr("fill", "white");
+
+		rects.enter()
+    		.append("rect")
+    			.attr("fill", "grey")
+	            .attr("y", y(0))
+	            .attr("height", 0)
+	            .attr("x", function(d){ return x(d.month) })
+            	.attr("width", x.bandwidth)
+            // AND UPDATE old elements present in new data.
+            .merge(rects)
+            .transition(t)
+				.attr("y", function(d){ return y(parseInt(d.case)); })
+				.attr("x", function(d){ return x(d.date); })
+				.attr("width", x.bandwidth)
+				.attr("height", function(d){ 
+					return height - y(parseInt(d.case)); });
+    }
 }
 
 
