@@ -11,6 +11,10 @@ var margin = { left:80, right:10, top:10, bottom:150 };
 var width = 1100 - margin.left - margin.right,
 	height = 500 - margin.top - margin.bottom;
 
+// parse the date / time
+var parseTime = d3.timeParse("%m/%d/%y");
+var formatDay = d3.timeFormat("%B %d");
+
 // transition
 var t = d3.transition().duration(1000);
 
@@ -48,31 +52,37 @@ d3.json("https://corona.lmao.ninja/v2/historical?lastdays=400").then(function(da
 
 	var timeline = Object.keys(data[0].timeline.cases);
 
-	var x = d3.scaleBand()
-		.domain(timeline)
+	// x and y
+	var x = d3.scaleTime()
+		.domain(d3.extent(timeline, function(d){
+			return parseTime(d);
+		}))
 		.range([0, width])
-		.paddingInner(0.2)
-		.paddingOuter(0.2);
+		// .paddingInner(0.2)
+		// .paddingOuter(0.2);
 
 	var y = d3.scaleLinear()
 		.domain([0, 10000])
 		.range([height, 0]);
 
-	var xAxisCall = d3.axisBottom(x);
+	var xAxisCall = d3.axisBottom(x)
+		.ticks(10)
+		.tickFormat(function(d){
+			return formatDay(d);
+		});
 	g.append("g")
 		.attr("class", "x-axis")
 		.attr("transform", "translate(0, " + height + ")")
 		.call(xAxisCall)
 		.selectAll("text")
-			.attr("y", 3)
-			.attr("x", 8)
-			.attr("font-size", "6px")
-			.attr("transform", "rotate(60)")
+			.attr("y", 12)
+			.attr("x", 3)
+			.attr("font-size", "8px")
 			.attr("fill", "white")
-    		.style("text-anchor", "start");
+    		.style("text-anchor", "middle");
 
 	var yAxisCall = d3.axisLeft(y)
-		.ticks(20)
+		.ticks(5)
 		.tickFormat(function(d){
 			return d;
 		});
@@ -81,6 +91,24 @@ d3.json("https://corona.lmao.ninja/v2/historical?lastdays=400").then(function(da
 		.call(yAxisCall)
 		.selectAll("text")
 		.attr("fill", "white");
+
+	// grid lines
+	// add the X gridlines
+    g.append("g")			
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxisCall
+            .tickSize(-height)
+            .tickFormat("")
+        )
+
+  // add the Y gridlines
+    g.append("g")			
+        .attr("class", "grid")
+        .call(yAxisCall
+            .tickSize(-width)
+            .tickFormat("")
+        )
 
 	// update(data, x, y, xAxisCall, yAxisCall, selectedCountry);
 
@@ -116,9 +144,12 @@ function update(data, x, y, xAxisCall, yAxisCall, selectedCountry){
     		dataForChart.push({"date": date, "case": +filteredData[date]});
     	}
 
+
     	y.domain([0, d3.max(Object.values(filteredData))]);
 
-		x.domain(Object.keys(filteredData));
+		x.domain(d3.extent(Object.keys(filteredData), function(d){
+			return parseTime(d);
+		}));
 
 		// JOIN new data with old elements.
 	    var rects = g.selectAll("rect")
@@ -134,18 +165,21 @@ function update(data, x, y, xAxisCall, yAxisCall, selectedCountry){
 	    d3.select(".x-axis").remove();
 	    d3.select(".y-axis").remove();
 
-		xAxisCall = d3.axisBottom(x);
+		xAxisCall = d3.axisBottom(x)
+		.ticks(10)
+		.tickFormat(function(d){
+			return formatDay(d);
+		});
 		g.append("g")
 			.attr("class", "x-axis")
 			.attr("transform", "translate(0, " + height + ")")
 			.call(xAxisCall)
 			.selectAll("text")
-				.attr("y", 3)
-				.attr("x", 8)
-				.attr("font-size", "6px")
-				.attr("transform", "rotate(60)")
+				.attr("y", 12)
+				.attr("x", 3)
+				.attr("font-size", "8px")
 				.attr("fill", "white")
-	    		.style("text-anchor", "start");
+	    		.style("text-anchor", "middle");
 
 		yAxisCall = d3.axisLeft(y)
 		g.append("g")
@@ -165,8 +199,10 @@ function update(data, x, y, xAxisCall, yAxisCall, selectedCountry){
             .merge(rects)
             .transition(t)
 				.attr("y", function(d){ return y(parseInt(d.case)); })
-				.attr("x", function(d){ return x(d.date); })
-				.attr("width", x.bandwidth)
+				.attr("x", function(d){ 
+					//console.log(x(parseTime(d.date)))
+					return x(parseTime(d.date)); })
+				.attr("width", 3)
 				.attr("height", function(d){ 
 					return height - y(parseInt(d.case)); });
     }
