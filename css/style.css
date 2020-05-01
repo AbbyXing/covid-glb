@@ -68,3 +68,8 @@ div.tooltip {
     opacity: 0.9;
     position: absolute;
 }
+
+.toolline {
+    stroke: grey;
+    stroke-dasharray: 0.5em
+}

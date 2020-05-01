@@ -1,3 +1,9 @@
+// tooltip
+var tooltip2 = d3.select('body')
+				.append('div')
+    			.attr('class', 'hidden tooltip')
+    			.style("visibility", "hidden");
+
 // selection button
 var selectionBtn = $( "#country-select" );
 
@@ -28,6 +34,11 @@ var g = svg2.append("g")
 	.attr("transform", "translate(" + margin.left + ", "
 			+ margin.top + ")")
 	.attr("class", "bars")
+
+// tool line
+var toolline = g.append("line")
+	.attr("class", "toolline")
+    .style("visibility", "hidden");
 
 g.append("text")
 	.attr("class", "y axis-label")
@@ -193,16 +204,34 @@ function update(data, x, y, xAxisCall, yAxisCall, selectedCountry){
     			.attr("fill", "grey")
 	            .attr("y", y(0))
 	            .attr("height", 0)
-	            .attr("x", function(d){ return x(d.month) })
-            	.attr("width", x.bandwidth)
+	            .attr("x", function(d){ return x(parseTime(d.date)); })
+            	.attr("width", 8)
+            	.on("mouseover", function(d){
+            		d3.select(this).style("fill", "white");
+			    	tooltip2.style("visibility", "visible")
+			    			.html("<span>" + d.date + ":" + "</span>"
+		                		+ "<br/>" + parseInt(d.case) + " cases");
+			    	toolline.attr("x1", 0) 
+					    .attr("y1", y(parseInt(d.case))) 
+					    .attr("x2", x(parseTime(d.date)))    
+					    .attr("y2", y(parseInt(d.case)))
+					    .style("visibility", "visible"); 
+			    })
+			    .on("mousemove", function(d) {
+		            tooltip2.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
+		        })
+		        .on("mouseout", function() {
+		        	d3.select(this).style("fill", "grey");
+		            tooltip2.style("visibility", "hidden");
+		            toolline.style("visibility", "hidden");
+		        })
             // AND UPDATE old elements present in new data.
             .merge(rects)
             .transition(t)
 				.attr("y", function(d){ return y(parseInt(d.case)); })
 				.attr("x", function(d){ 
-					//console.log(x(parseTime(d.date)))
 					return x(parseTime(d.date)); })
-				.attr("width", 3)
+				.attr("width", 8)
 				.attr("height", function(d){ 
 					return height - y(parseInt(d.case)); });
     }
