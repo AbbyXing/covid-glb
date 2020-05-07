@@ -8,6 +8,26 @@ p {
     margin-bottom: 50px;
 }
 
+th{
+    background-color: #525252;
+    padding-left: 10px;
+    cursor: pointer;
+
+}
+tr{
+    background-color: #363636;
+
+}
+td{
+    padding-left: 10px;
+}
+table{
+    color: #FFFFFF;
+    font-size: 0.9em;
+    margin: 0 auto;
+    width: 80%;
+}
+
 .flag {
     height: 12px;
     float: left;
