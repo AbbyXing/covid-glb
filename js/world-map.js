@@ -69,7 +69,7 @@ function dataToggle(v){
 	        	d.total = +dataForMap.get(d.id)[value];
 	        return colorScales.get(value)(d.total);
 	    });
-	    d3.select(".title-word").text(value.toUpperCase());
+	    //d3.select(".title-word").text(value.toUpperCase());
 }
 
 function ready(topo, countries) {

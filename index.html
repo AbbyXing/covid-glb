@@ -13,7 +13,7 @@
 <body>
 
     <nav class="navbar navbar-light bg-light">
-        <span class="navbar-brand h3">COVID-19 <span class="title-word">CONFIRMED CASES</span> </span>
+        <span class="navbar-brand h3">COVID-19 GLOBAL</span>
         <span class = "navbar-brand h3 current-date">
             <script> document.write(new Date().toLocaleDateString()); </script>
         </span>
@@ -26,7 +26,7 @@
             <div class="col-sm-9">
               <div class="row">
                 <div id="my_dataviz" class="row">
-                  <p>- World Map:</p>
+                  <p>- World Map Today:</p>
                 </div>
               </div>
                 <!-- Data Toggle Buttons -->
@@ -53,7 +53,7 @@
         <!-- Bar Chart -->
         <div class="row">
           <div id="bar-chart" class="col-sm-12">
-            <p>- Countries:</p>
+            <p>- Confirmed Cases in the past 400 Days:</p>
             <!-- Country Select Input -->
             <div class="input-group">
               <div class="input-group-prepend">
@@ -68,7 +68,9 @@
 
         <!-- Table -->
         <div class="row">
-          <div id="table" class="col-sm-12"></div>
+          <div id="table" class="col-sm-12">
+            <p>- Worldwide Table Today:</p>
+          </div>
         </div>
     </div>
 
@@ -79,6 +81,7 @@
 <script src="https://d3js.org/d3.v5.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<script src="https://kit.fontawesome.com/dc430c9592.js" crossorigin="anonymous"></script>
 <!-- Custom JS -->
 <script src="js/world-map.js"></script>
 <script src="js/bar-chart.js"></script>

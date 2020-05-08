@@ -3,6 +3,8 @@ var table = d3.select("#table")
 var titles = ["Country", "Confirmed Cases", "Today Cases", "Recovered", "Deaths", "Cases Per One Million"];
 var sortAscending = true;
 var dataForTable = [];
+var arrowUp = " <i class='fas fa-arrow-up'></i>";
+var arrowDown = " <i class='fas fa-arrow-down'></i>";
 
 d3.json("https://corona.lmao.ninja/v2/countries").then(function(data){
 
@@ -12,21 +14,27 @@ d3.json("https://corona.lmao.ninja/v2/countries").then(function(data){
 
 	var headers = table.append('thead').append('tr')
 		                   .selectAll('th')
-		                   .data(titles).enter()
+		                   .data(titles)
+		                   .enter()
 		                   .append('th')
-		                   .text(function (d) {
+		                   .html(function (d) {
 			                    return d;
 		                    })
 		                   .on('click', function (d) {
-		                	   headers.attr('class', 'header');
+		                	   headers.attr('class', 'header')
+		                	   		.html(function (d) {
+					                    return d;
+				                    });
 
 		                	   var index = titles.findIndex((title) => title === d);
 		                	   if (sortAscending) {
+		                	   	d3.select(this).html(d + arrowDown);
 		                	     rows.sort(function(a, b) {
 		                	     	return d3.ascending(b[index], a[index]); });
 		                	     sortAscending = false;
 		                	     this.className = 'aes';
 		                	   } else {
+		                	   	d3.select(this).html(d + arrowUp);
 		                		 rows.sort(function(a, b) { 
 		                		 	return d3.descending(b[index], a[index]); });
 		                		 sortAscending = true;
