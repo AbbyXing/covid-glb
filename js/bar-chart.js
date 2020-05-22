@@ -10,12 +10,6 @@ var selectionBtn = $( "#country-select" );
 // selected country
 var selectedCountry;
 
-// margin
-var margin = { left:80, right:10, top:10, bottom:150 };
-
-// width and height
-var width = 1100 - margin.left - margin.right,
-	height = 500 - margin.top - margin.bottom;
 
 // parse the date / time
 var parseTime = d3.timeParse("%m/%d/%y");
@@ -24,8 +18,22 @@ var formatDay = d3.timeFormat("%B %d");
 // transition
 var t = d3.transition().duration(1000);
 
+// div
+var div2 = d3.select("#bar-chart")
+
+// width and height
+var width = div2.style("width").replace("px", "");
+	height = width * 0.6;
+
+// margin
+var margin = { left: width * 0.08, right: width * 0.05, top: width * 0.01, bottom: width * 0.15 };
+
+// width and height
+width = width - margin.left - margin.right;
+height = height - margin.top - margin.bottom;
+
 // svg
-var svg2 = d3.select("#bar-chart")
+var svg2 = div2
 	.append("svg")
 	.attr("width", width + margin.left + margin.right)
 	.attr("height", height + margin.top + margin.bottom)
@@ -40,17 +48,17 @@ var toolline = g.append("line")
 	.attr("class", "toolline")
     .style("visibility", "hidden");
 
-g.append("text")
-	.attr("class", "y axis-label")
-	.attr("x", -(height / 2))
-	.attr("y", -70)
-	.attr("font-size", "12px")
-	.attr("text-anchor", "middle")
-	.attr("transform", "rotate(-90)")
-	.attr("fill", "white")
-	.text("Confirmed Cases");
+// g.append("text")
+// 	.attr("class", "y axis-label")
+// 	.attr("x", -(height / 2))
+// 	.attr("y", -width * 0.07)
+// 	.attr("font-size", "2em")
+// 	.attr("text-anchor", "middle")
+// 	.attr("transform", "rotate(-90)")
+// 	.attr("fill", "white")
+// 	.text("Confirmed Cases");
 
-d3.json("https://corona.lmao.ninja/v2/historical?lastdays=400").then(function(data){
+d3.json("https://corona.lmao.ninja/v2/historical?lastdays=100").then(function(data){
 
 	// initiate country selection values:
 	data.forEach(function(d, i){
@@ -77,7 +85,7 @@ d3.json("https://corona.lmao.ninja/v2/historical?lastdays=400").then(function(da
 		.range([height, 0]);
 
 	var xAxisCall = d3.axisBottom(x)
-		.ticks(10)
+		.ticks(5)
 		.tickFormat(function(d){
 			return formatDay(d);
 		});
@@ -88,7 +96,7 @@ d3.json("https://corona.lmao.ninja/v2/historical?lastdays=400").then(function(da
 		.selectAll("text")
 			.attr("y", 12)
 			.attr("x", 3)
-			.attr("font-size", "8px")
+			.attr("font-size", "2em")
 			.attr("fill", "white")
     		.style("text-anchor", "middle");
 
@@ -101,6 +109,7 @@ d3.json("https://corona.lmao.ninja/v2/historical?lastdays=400").then(function(da
 		.attr("class", "y-axis")
 		.call(yAxisCall)
 		.selectAll("text")
+		.attr("font-size", "2em")
 		.attr("fill", "white");
 
 	// grid lines
@@ -177,7 +186,7 @@ function update(data, x, y, xAxisCall, yAxisCall, selectedCountry){
 	    d3.select(".y-axis").remove();
 
 		xAxisCall = d3.axisBottom(x)
-		.ticks(10)
+		.ticks(5)
 		.tickFormat(function(d){
 			return formatDay(d);
 		});
@@ -188,7 +197,7 @@ function update(data, x, y, xAxisCall, yAxisCall, selectedCountry){
 			.selectAll("text")
 				.attr("y", 12)
 				.attr("x", 3)
-				.attr("font-size", "8px")
+				.attr("font-size", "2em")
 				.attr("fill", "white")
 	    		.style("text-anchor", "middle");
 
@@ -197,6 +206,7 @@ function update(data, x, y, xAxisCall, yAxisCall, selectedCountry){
 			.attr("class", "y-axis")
 			.call(yAxisCall)
 			.selectAll("text")
+			.attr("font-size", "2em")
 			.attr("fill", "white");
 
 		rects.enter()

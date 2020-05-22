@@ -20,25 +20,26 @@
     </nav>
 
     <!-- Bootstrap grid setup -->
-    <div class="container">
+    <div class="container-fluid">
         <!-- World Map -->
         <div class="row">
-            <div class="col-sm-9">
+            <div class="col-sm-12">
               <div class="row">
-                <div id="my_dataviz" class="row">
+                <div id="my_dataviz">
                   <p>- World Map Today:</p>
                 </div>
               </div>
-                <!-- Data Toggle Buttons -->
-                <div class="row">
-                    <div class="btn-group toggle-btn" role="group">
-                      <button type="button" value="cases" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Total Cases</button>
-                      <button type="button" value="todayCases" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Today Cases</button>
-                      <button type="button" value="deaths" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Deaths</button>
-                    </div>
-                </div>
+              <!-- Data Toggle Buttons -->
+              <div class="row">
+                  <div class="btn-group toggle-btn" role="group">
+                    <button type="button" value="cases" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Total Cases</button>
+                    <button type="button" value="todayCases" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Today Cases</button>
+                    <button type="button" value="deaths" class="btn btn-outline-secondary" onclick="dataToggle(this.value)">Deaths</button>
+                  </div>
+              </div>
             </div>
-            <!-- Infor List -->
+
+           <!--  
             <div class="col-sm-3">
                 <div class="list-group info-list">
                   <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html?topic=ex-col-faq#a" class="list-group-item list-group-item-action">- What is Covid-19?</a>
@@ -46,14 +47,14 @@
                   <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/symptoms.html#s" class="list-group-item list-group-item-action">- Symptoms of Covid-19</a>
                   <a href="https://www.canada.ca/en/public-health/services/diseases/2019-novel-coronavirus-infection/prevention-risks.html#p" class="list-group-item list-group-item-action">- How to prevent?</a>
                 </div>
-            </div>
+            </div> -->
         </div>
  
 
         <!-- Bar Chart -->
         <div class="row">
           <div id="bar-chart" class="col-sm-12">
-            <p>- Confirmed Cases in the past 400 Days:</p>
+            <p>- Confirmed Cases in the past 100 Days:</p>
             <!-- Country Select Input -->
             <div class="input-group">
               <div class="input-group-prepend">

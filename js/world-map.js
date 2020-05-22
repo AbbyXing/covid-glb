@@ -1,9 +1,13 @@
-var width = 700,
-	height = 400;
-var svg = d3.select("#my_dataviz")
+
+var div = d3.select("#my_dataviz");
+var width = div.style("width").replace("px", "");
+
+var svg = div
 	.append("svg")
-	.attr("width", width)
-	.attr("height", height);
+	.attr("width", "100%");
+
+var height = width * 0.45;
+svg.attr("height", height);
 
 // Tooltip
 var tooltip = d3.select('body')
@@ -14,8 +18,8 @@ var tooltip = d3.select('body')
 // Projection
 const projection = d3
 	.geoEckert4()
-	.scale(130)
-    .translate([0.5 * width, 0.5 * height]);
+	.scale(175)
+    .translate([0.51 * width, 0.5 * height]);
 
 // Path and Graticule
 const path = d3.geoPath().projection(projection);
