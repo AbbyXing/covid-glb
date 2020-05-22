@@ -6,7 +6,7 @@ var svg = div
 	.append("svg")
 	.attr("width", "100%");
 
-var height = width * 0.45;
+var height = width * 0.5;
 svg.attr("height", height);
 
 // Tooltip
